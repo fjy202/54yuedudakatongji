@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>仓山实验小学五年四班课外阅读打卡统计</title>
+        <style>
+        #inbox:empty:before{ 
+            content: '将QQ打卡的聊天记录复制粘贴至此处。'; 
+            color: gray; 
+        }
+        #inbox{
+            min-height: 300px;
+            border: 1px solid rgb(190, 190, 190);
+            outline: none;
+        }
+        </style>
+    </head>
+    <body>
+        <h1>仓山实验小学五年四班课外阅读打卡统计</h1>
+        <script>
+            var renshu=46
+            function getWorker(date){
+                var firstDate=new Date("2019-09-03")
+                var secondDate=new Date(date)
+                var diff = Math.abs(firstDate.getTime() - secondDate.getTime())
+                var result = parseInt(diff / (1000 * 60 * 60 * 24))+1;
+                return result%renshu+1
+            }
+            //var weidaka=["陈悦妍","黄湘宜","江雨函","李梦佳","林虹佳","李佳瑾","李佳璐","邱嘉涵","魏子昕","王佳欣","谢可一","张雅雯","赵奕涵","卓梓滢","郑筱雅","朱雨汐","张瑾萱","陈王子君","陈子滔","陈劲远","陈纯锐","方霁云","何东晟","江森洪","刘星宇","李国韬","林仁杰","潘辰禹","唐浩轩","王锦煌","吴仁俊","吴漱恺","吴宜芃","吴永祥","谢积烁","俞越","郑博文","张旭凯","郑开元","李蓉","王子诚","许可馨","王允浩","郑诗宇","魏敦豪","陈欣荣"]
+            var weidaka=["悦妍","湘宜","雨函","梦佳","虹佳","佳瑾","佳璐","嘉涵","子昕","佳欣","可一","雅雯","奕涵","梓滢","筱雅","雨汐","瑾萱","子君","子滔","劲远","纯锐","霁云","东晟","森洪","星宇","国韬","仁杰","辰禹","浩轩","锦煌","仁俊","漱恺","宜芃","永祥","积烁","俞越","博文","旭凯","开元","李蓉","子诚","可馨","允浩","诗宇","敦豪","欣荣"]
+            var students=[]
+            weidaka.forEach(function(value){students.push(value)})
+            function getIndexOfStudents(name){
+                var i=0
+                var x
+                for(x in students){
+                    if(students[x]==name){
+                        return i+1
+                    }
+                    i++
+                }
+            }
+            var date
+            window.captureEvents(Event.SUBMIT);
+            window.onsubmit=function(ev){
+                weidaka=["悦妍","湘宜","雨函","梦佳","虹佳","佳瑾","佳璐","嘉涵","子昕","佳欣","可一","雅雯","奕涵","梓滢","筱雅","雨汐","瑾萱","子君","子滔","劲远","纯锐","霁云","东晟","森洪","星宇","国韬","仁杰","辰禹","浩轩","锦煌","仁俊","漱恺","宜芃","永祥","积烁","俞越","博文","旭凯","开元","李蓉","子诚","可馨","允浩","诗宇","敦豪","欣荣"]
+                var lineend="\n"
+                this.console.log(lineend=="\n")
+                this.console.log((document.getElementById("inbox").innerText+lineend).split("\n"))
+                var lines=(document.getElementById("inbox").innerText+lineend).split(lineend)
+                date=/(20[0-2][0-9])\/([1-9]|1[0-2])\/([1-9]|[1-2][0-9]|3[0-1])/.exec(document.getElementById("inbox").innerText)[0]
+                lines.forEach(function(value,index){
+                    weidaka.forEach(function(value_,index_){
+                        if(value.split(" ")[0].indexOf(value_)>0){
+                            console.log(lines[index+1])
+                            if(lines[index+1].trim()==""){
+                                console.log(1)
+                                console.log(index)
+                                weidaka.splice(index_,1)
+                            }
+                        }
+                    })
+                })
+                var weidakastr=""
+                weidaka.forEach(function(value,index){
+                    weidakastr=weidakastr.concat(getIndexOfStudents(value)+"号")
+                    if(index!=45){
+                        weidakastr=weidakastr.concat(" ")
+                    }
+                })
+                if(weidakastr){
+                    alert(date+"由"+getWorker(date)+"号家长统计\n\n"+date+"未打卡同学名单："+weidakastr+"，共"+weidaka.length+"人")
+                }else{
+                    alert(date+"由"+getWorker(date)+"号家长统计\n\n"+date+"全部同学已打卡。")
+                }
+            }
+        </script>
+        <span>
+            <div contenteditable id="inbox"></div>
+        </span>
+        <form action="javascript:;"><input type="submit"/></form>
+    </body>
+</html>
